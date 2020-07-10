@@ -1,0 +1,11 @@
+*.log
+*.pid
+
+.built
+.DS_Store
+.vercel
+
+npm-debug.log
+
+built
+node_modules
