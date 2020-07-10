@@ -20,6 +20,8 @@ module.exports = async function( _options ) {
 		}
 	} );
 
+	const cwd = process.cwd();
+
 	const fastify_objects = paths.map( ( path ) => {
 		const [ _match, url, method ] = path.match( new RegExp( `^${ options.root }(.*?)/(${ options.methods.join( '|' )})\\.(${ options.extensions.join( '|' ) })`, 'i' ) );
 
@@ -27,7 +29,8 @@ module.exports = async function( _options ) {
 			return undefined;
 		}
 
-		const handler = require( `./${ path }` );
+		const normalized = require( 'path' ).join( cwd, path );
+		const handler = require( normalized );
 		const route = typeof handler === 'function' ? {
 			handler
 		} : handler;
