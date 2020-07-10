@@ -12,7 +12,7 @@ const fs_fastify = require( '@andyburke/fs-fastify' );
 
 const routes = await fs_fastify();
 for ( const route of routes ) {
-	fastify.register( route );
+	fastify.route( route );
 }
 
 fastify.listen( 3000, function ( err, address ) {
