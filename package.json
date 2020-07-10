@@ -1,6 +1,6 @@
 {
   "name": "@andyburke/fs-fastify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Drive your fastify setup from the filesystem.",
   "main": "index.js",
   "scripts": {

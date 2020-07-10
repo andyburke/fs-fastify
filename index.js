@@ -38,5 +38,5 @@ module.exports = async function( _options ) {
 		}, route );
 	} ).filter( ( object ) => typeof object !== 'undefined' );
 
-	return fastify_objects;
+	return fastify_objects || [];
 };

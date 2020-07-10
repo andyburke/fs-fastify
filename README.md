@@ -8,7 +8,7 @@ A module to drive your fastify setup via the filesystem.
 const fastify = require( 'fastify' )( {
 	logger: true
 } );
-const fs_fastify = require( 'fs-fastify' );
+const fs_fastify = require( '@andyburke/fs-fastify' );
 
 const routes = await fs_fastify();
 for ( const route of routes ) {
