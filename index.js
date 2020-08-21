@@ -20,7 +20,7 @@ module.exports = async function( _options ) {
 		}
 	} );
 
-	const cwd = process.cwd();
+	const cwd = options.cwd ?? process.cwd();
 
 	const fastify_objects = paths.map( ( path ) => {
 		const [ _match, url, method ] = path.match( new RegExp( `^${ options.root }(.*?)/(${ options.methods.join( '|' )})\\.(${ options.extensions.join( '|' ) })`, 'i' ) );
