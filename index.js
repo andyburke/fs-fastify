@@ -2,6 +2,7 @@
 
 const extend = require( 'extend' );
 const globby = require( 'globby' );
+const path = require( 'path' );
 
 const METHODS = [ 'GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS' ];
 const EXTENSIONS = [ 'js', 'cjs' ];
@@ -13,24 +14,24 @@ module.exports = async function( _options ) {
 		extensions: EXTENSIONS
 	}, _options );
 
-	const paths = await globby( options.root, {
+	const cwd = options.cwd ?? process.cwd();
+	const root = path.join( cwd, options.root );
+
+	const paths = await globby( root, {
 		expandDirectories: {
 			files: options.methods,
 			extensions: options.extensions
 		}
 	} );
 
-	const cwd = options.cwd ?? process.cwd();
-
 	const fastify_objects = paths.map( ( path ) => {
-		const [ _match, url, method ] = path.match( new RegExp( `^${ options.root }(.*?)/(${ options.methods.join( '|' )})\\.(${ options.extensions.join( '|' ) })`, 'i' ) );
+		const [ _match, url, method ] = path.match( new RegExp( `^${ root }(.*?)/(${ options.methods.join( '|' )})\\.(${ options.extensions.join( '|' ) })`, 'i' ) );
 
 		if ( !_match ) {
 			return undefined;
 		}
 
-		const normalized = require( 'path' ).join( cwd, path );
-		const handler = require( normalized );
+		const handler = require( path );
 		const route = typeof handler === 'function' ? {
 			handler
 		} : handler;
